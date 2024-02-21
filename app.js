@@ -1,3 +1,4 @@
+document.addEventListener("DOMContentLoaded", function () {
 const phrases = ["A vida trará coisas boas se tiver paciência.",
     "Demonstre amor e alegria em todas as oportunidades e verá que a paz nasce dentro de si.",
     "Não compense na ira o que lhe falta na razão.",
@@ -87,13 +88,32 @@ const phrases = ["A vida trará coisas boas se tiver paciência.",
     "A gentileza é a linguagem que o surdo pode ouvir e o cego pode ver.",
     "A maior aventura que você pode empreender é viver a vida dos seus sonhos.",
     "O sucesso é a soma de pequenos esforços repetidos dia após dia."]
+    
+  const btn = document.querySelector(".btn");
+  const spanText = document.querySelector(".phrase");
+  const img = document.getElementById("one-img");
 
-function OpenCookieLucky() {
-    const phrase_random = Math.floor(Math.random() * phrases.length)
-    const span_text_radom = document.querySelector(".phrase")
-    const img_change = document.getElementById("one-img")
-    const two_img = "./cookie-open.png"
+  btn.addEventListener("click", OpenCookieLucky);
 
-    img_change.src = two_img
-    span_text_radom.textContent = `"${phrases[phrase_random]} 🍪"`
-}
+  function OpenCookieLucky() {
+    const phraseRandom = Math.floor(Math.random() * phrases.length);
+    const twoImg = "./cookie-open.png";
+
+    img.src = twoImg;
+    spanText.textContent = `"${phrases[phraseRandom]} 🍪"`;
+    btn.textContent = "Tentar sorte novamente";
+    
+    btn.removeEventListener("click", OpenCookieLucky); 
+    btn.addEventListener("click", resetState);
+  }
+
+  function resetState() {
+    const closedImg = "./cookie-closed.png";
+    img.src = closedImg;
+    spanText.textContent = "";
+    btn.textContent = "Quebrar biscoito 🍪";
+
+    btn.removeEventListener("click", resetState);
+    btn.addEventListener("click", OpenCookieLucky);
+  }
+});
